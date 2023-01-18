@@ -15,7 +15,7 @@ jobs:
         
       - name: List all files
         run: |
-          echo "All files:
+          echo "All files:"
           ls ${{ github.workspace }}
           
       - name: Content app.js
