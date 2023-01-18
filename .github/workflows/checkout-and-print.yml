@@ -1,0 +1,22 @@
+name: GitHub Actions Test
+on: [push]
+
+jobs:
+  print-environment-information:
+    name: Print environment information
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Hello World
+        run: echo "Hello World"
+        
+      - name: Checkout
+        uses: actions/checkout@v3.3.0,
+        
+      - name: List all files
+        run: |
+          echo "All files:
+          ls ${{ github.workspace }}
+          
+      - name: Content app.js
+        run: cat ${{ github.workspace }}/src/frontend/app.js
