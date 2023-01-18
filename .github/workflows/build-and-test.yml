@@ -8,8 +8,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Install nodejs
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: |
+          npm install
+          npm test
+    
       - name: Checkout repository content
         uses: actions/checkout@v2
 
-      - name: Print app.js
-        run: cat src/frontend/app.js
+      - name: run app.js
+        run: node ${{ github.workspace }}/src/frontend/app.js
+      
+      - name: copy app.js and run again
+        run: |
+          mkdir dist
+          cp ${{ github.workspace }}/src/frontend/app.js dist/app.js
+          sed "1 s/^/\/\/$(date)\n/" dist/app.js
+          node dist/app.js
+          
+
+  backend:
+    name: Build and run backend
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Install Python
+        uses: actions/setup-python@v4.5.0
+    
+      - name: Checkout repository content
+        uses: actions/checkout@v2
+
+      - name: copy and run Python
+        run: |
+          mkdir dist
+          cp ${{ github.workspace }}/src/backend/run.py dist/run.py
+          sed "1 s/^/#$(date)\n/" dist/run.py
+          python dist/run.py
